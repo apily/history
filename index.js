@@ -1,4 +1,3 @@
-
 /*
  * history
  * History component
@@ -54,4 +53,15 @@ History.prototype.start = function () {
 
   this.handler = handler.bind(this);
   window.addEventListener('popstate', this.handler);
+};
+
+/*
+ * stop
+ * 
+ * @return {History} this for chaining
+ * @api public
+ */
+
+History.prototype.stop = function () {
+  window.removeEventListener('popstate', this.handler);
 };
