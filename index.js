@@ -30,6 +30,7 @@ function History() {
     return new History();
   }
   Emitter.call(this);
+  this.handlers = [];
 }
 
 /*
@@ -48,8 +49,8 @@ History.prototype.constructor = History;
 
 History.prototype.start = function () {
   function handler (event) {
-    
-  };
+
+  }
 
   this.handler = handler.bind(this);
   window.addEventListener('popstate', this.handler);
