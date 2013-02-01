@@ -110,4 +110,5 @@ History.prototype.start = function () {
 
 History.prototype.stop = function () {
   window.removeEventListener('hashchange', this.onchange);
+  this.started = false;
 };
