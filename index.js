@@ -42,6 +42,20 @@ History.prototype = Object.create(Emitter.prototype);
 History.prototype.constructor = History;
 
 /**
+ * route
+ * Add a route to be tested when the hash changes. 
+ * 
+ * @param {String|RegExp} route route
+ * @param {Function} callback callback
+ * @return {History} this for chaining
+ * @api public
+ */
+
+History.prototype.route = function (route, callback) {
+  this.handlers.push({route: route, callback: callback});
+};
+
+/**
  * onchange
  * Load the url, if it's changed.
  * It's called by the browser.
@@ -50,7 +64,7 @@ History.prototype.constructor = History;
  * @api private
  */
 
-History.prototype.onchange = (event) {
+History.prototype.onchange = function (event) {
   var hash = window.location.hash;
   var handlers = this.handlers;
   var len = handlers.length;
@@ -59,7 +73,7 @@ History.prototype.onchange = (event) {
   var route;
   var callback;
   
-  for (i = 0; i < len; i += 1) {
+  for (i = len; i >= 0; i -= 1) {
     handler = handlers[i];
     route = handler.route;
     callback = handler.callback;
