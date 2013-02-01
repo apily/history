@@ -30,7 +30,7 @@ function History() {
     return new History();
   }
   Emitter.call(this);
-  this.handlers = {};
+  this.handlers = [];
   this.onchange = this.onchange.bind(this);
 }
 
@@ -52,6 +52,25 @@ History.prototype.constructor = History;
 
 History.prototype.onchange = (event) {
   var hash = window.location.hash;
+  var handlers = this.handlers;
+  var len = handlers.length;
+  var i;
+  var handler;
+  var route;
+  var callback;
+  
+  for (i = 0; i < len; i += 1) {
+    handler = handlers[i];
+    route = handler.route;
+    callback = handler.callback;
+    
+    if (route.test(hash)) {
+      callback(hash);
+      return true;
+    }
+  }
+  
+  return false;
 };
 
 /*
