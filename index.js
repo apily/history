@@ -7,7 +7,7 @@
  */ 
 
 /*
- * Expose `History`
+ * Expose `History` singleton
  */
 
 module.exports = new History();
