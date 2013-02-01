@@ -30,7 +30,8 @@ function History() {
     return new History();
   }
   Emitter.call(this);
-  this.handlers = [];
+  this.handlers = {};
+  this.onchange = this.onchange.bind(this);
 }
 
 /*
@@ -40,6 +41,19 @@ function History() {
 History.prototype = Object.create(Emitter.prototype);
 History.prototype.constructor = History;
 
+/**
+ * onchange
+ * Load the url, if it's changed.
+ * It's called by the browser.
+ *
+ * @param {Event} event event
+ * @api private
+ */
+
+History.prototype.onchange = (event) {
+  var hash = window.location.hash;
+};
+
 /*
  * start
  * 
@@ -48,12 +62,7 @@ History.prototype.constructor = History;
  */
 
 History.prototype.start = function () {
-  function handler (event) {
-
-  }
-
-  this.handler = handler.bind(this);
-  window.addEventListener('popstate', this.handler);
+  window.addEventListener('hashchange', this.onchange);
 };
 
 /*
@@ -64,5 +73,5 @@ History.prototype.start = function () {
  */
 
 History.prototype.stop = function () {
-  window.removeEventListener('popstate', this.handler);
+  window.removeEventListener('hashchange', this.onchange);
 };
