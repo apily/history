@@ -32,6 +32,7 @@ function History() {
   Emitter.call(this);
   this.handlers = [];
   this.onchange = this.onchange.bind(this);
+  this.started = false;
 }
 
 /*
@@ -95,7 +96,9 @@ History.prototype.onchange = function (event) {
  */
 
 History.prototype.start = function () {
+  if (this.started) return;
   window.addEventListener('hashchange', this.onchange);
+  this.started = true;
 };
 
 /*
