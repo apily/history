@@ -1,3 +1,4 @@
+
 /*
  * history
  * History component
@@ -10,13 +11,31 @@
  * Expose `History` singleton
  */
 
-module.exports = new History();
+module.exports = history;
 
 /*
  * Module dependencies
  */
 
 var Emitter = require('emitter');
+
+/**
+ * singleton
+ */
+
+var singleton;
+
+/**
+ * history
+ * Get the singleton
+ */
+
+function history () {
+  if (!singleton) {
+    singleton = new History();
+  }
+  return singleton;
+}
 
 /*
  * History
