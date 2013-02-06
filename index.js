@@ -1,4 +1,3 @@
-
 /*
  * history
  * History component
@@ -87,13 +86,13 @@ History.prototype.route = function (route, callback) {
 History.prototype.onchange = function (event) {
   var hash = window.location.hash;
   var handlers = this.handlers;
-  var len = handlers.length;
+  var n = handlers.length - 1;
   var i;
   var handler;
   var route;
   var callback;
   
-  for (i = len; i >= 0; i -= 1) {
+  for (i = n; i >= 0; i -= 1) {
     handler = handlers[i];
     route = handler.route;
     callback = handler.callback;
