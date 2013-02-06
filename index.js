@@ -72,6 +72,7 @@ History.prototype.constructor = History;
  */
 
 History.prototype.route = function (route, callback) {
+  route = new RegExp(route);
   this.handlers.push({route: route, callback: callback});
 };
 
