@@ -24,8 +24,21 @@ describe('History#route', function () {
   });
 
   it('should intercept the hash change', function (done) {
-    history.route('a', function() { 
-      console.log(arguments);
+    history.route('a', function () { 
+      done();
+    });
+    setTimeout(function () {
+      window.location = '#z';
+      setTimeout(function () {
+        window.location = '#a';
+      }, 100);
+    }, 100);
+  });
+
+  it('should emit `change` event', function (done) {
+    history.route('a', function () {});
+    history.on('change', function (hash) {
+      assert(hash === '#a');
       done();
     });
     setTimeout(function () {
