@@ -100,6 +100,7 @@ History.prototype.onchange = function (event) {
     
     if (route.test(hash)) {
       callback(hash);
+      this.emit('change', hash);
       return true;
     }
   }
