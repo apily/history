@@ -85,7 +85,8 @@ History.prototype.route = function (route, callback) {
  */
 
 History.prototype.onchange = function (event) {
-  var hash = window.location.hash;
+  var new_hash = event.newURL.split('#')[1];
+  var old_hash = event.oldURL.split('#')[1];
   var handlers = this.handlers;
   var n = handlers.length - 1;
   var i;
@@ -98,9 +99,9 @@ History.prototype.onchange = function (event) {
     route = handler.route;
     callback = handler.callback;
     
-    if (route.test(hash)) {
-      callback(hash);
-      this.emit('change', hash);
+    if (route.test(new_hash)) {
+      callback(new_hash, old_hash);
+      this.emit('change', new_hash, old_hash);
       return true;
     }
   }

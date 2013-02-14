@@ -8,45 +8,34 @@ describe('History#route', function () {
     history = History();
   });
 
-  beforeEach(function (done) {
-    console.log('start');
+  beforeEach(function () {
     window.location = '#';
-    setTimeout(function () {
-      history.start();
-      done();
-    }, 100);
+    history.start();
   });
 
-  afterEach(function (done) {
-    console.log('stop');
+  afterEach(function () {
     history.stop();
-    done();
   });
 
   it('should intercept the hash change', function (done) {
-    history.route('a', function () { 
+    history.route('b', function (new_hash, old_hash) { 
+      assert(new_hash === 'b');
+      assert(old_hash === 'a');
       done();
     });
-    setTimeout(function () {
-      window.location = '#z';
-      setTimeout(function () {
-        window.location = '#a';
-      }, 100);
-    }, 100);
+    window.location = '#a';
+    window.location = '#b';
   });
 
   it('should emit `change` event', function (done) {
-    history.route('a', function () {});
-    history.on('change', function (hash) {
-      assert(hash === '#a');
+    history.route('b', function () {});
+    history.on('change', function (new_hash, old_hash) {
+      assert(new_hash === 'b');
+      assert(old_hash === 'a');
       done();
     });
-    setTimeout(function () {
-      window.location = '#z';
-      setTimeout(function () {
-        window.location = '#a';
-      }, 100);
-    }, 100);
+    window.location = '#a';
+    window.location = '#b';
   });
 
 });
