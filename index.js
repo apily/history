@@ -1,4 +1,5 @@
-/*
+
+/**
  * history
  * History component
  *
@@ -6,13 +7,13 @@
  * @license MIT
  */ 
 
-/*
+/**
  * Expose `History` singleton
  */
 
 module.exports = history;
 
-/*
+/**
  * Module dependencies
  */
 
@@ -36,7 +37,7 @@ function history () {
   return singleton;
 }
 
-/*
+/**
  * History
  * Create an history.
  *
@@ -53,7 +54,7 @@ function History() {
   this.started = false;
 }
 
-/*
+/**
  * Inherit from `Emitter`
  */
 
@@ -85,8 +86,9 @@ History.prototype.route = function (route, callback) {
  */
 
 History.prototype.onchange = function (event) {
-  var new_hash = event.newURL.split('#')[1];
-  var old_hash = event.oldURL.split('#')[1];
+  var hash = '#';
+  var new_hash = hash + event.newURL.split(hash)[1];
+  var old_hash = hash + event.oldURL.split(hash)[1];
   var handlers = this.handlers;
   var n = handlers.length - 1;
   var i;
@@ -109,7 +111,7 @@ History.prototype.onchange = function (event) {
   return false;
 };
 
-/*
+/**
  * start
  * 
  * @return {History} this for chaining
@@ -122,7 +124,7 @@ History.prototype.start = function () {
   this.started = true;
 };
 
-/*
+/**
  * stop
  * 
  * @return {History} this for chaining
