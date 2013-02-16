@@ -1,4 +1,3 @@
-
 /**
  * history
  * History component
@@ -74,6 +73,36 @@ History.prototype.constructor = History;
 History.prototype.route = function (route, callback) {
   route = new RegExp(route);
   this.handlers.push({route: route, callback: callback});
+};
+
+/** 
+ * bind
+ * 
+ * @return {History} this for chaining
+ * @api public
+ */
+
+History.prototype.bind = function (route, handler, context) {
+  if (typeof route === 'object') {
+    return this.bind_all(route);
+  }
+  route = new RegExp(route);
+  this.handlers.push({route: route, handler: handler, context: context});
+  return this;
+};
+
+/** 
+ * bind_all
+ * 
+ * @return {History} this for chaining
+ * @api public
+ */
+
+History.prototype.bind_all = function (routes) {
+  Object.keys(routes).forEach(function (route) {
+    this.bind(route, routes[route]);
+  }, this);
+  return this;
 };
 
 /**
