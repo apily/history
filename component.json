@@ -9,7 +9,8 @@
     "apily/emitter": "*"
   },
   "development": {
-    "component/assert": "*"
+    "component/assert": "*",
+    "visionmedia/mocha": "*"
   },
   "license": "MIT"
 }

@@ -71,8 +71,8 @@ History.prototype.constructor = History;
 
 History.prototype.onchange = function (event) {
   this.prev = this.current;
-  this.current = window.location.hash;
-  this.emit('change', this, event);
+  this.current = '#' + event.newURL.split('#')[1]; //window.location.hash;
+  this.emit('change', this);
 };
 
 /**
@@ -82,12 +82,13 @@ History.prototype.onchange = function (event) {
  * @api public
  */
 
-History.prototype.start = function () {
+History.prototype.start = function (current) {
   if (this.started) {
     return this;
   }
-  window.onhashchange = this.onchange;
+  this.current = current || '#';
   this.started = true;
+  window.onhashchange = this.onchange;
   return this;
 };
 
@@ -99,7 +100,7 @@ History.prototype.start = function () {
  */
 
 History.prototype.stop = function () {
-  window.onhashchange = this.onchange;
   this.started = false;
+  window.onhashchange = this.onchange;
   return this;
 };
