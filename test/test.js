@@ -1,28 +1,35 @@
 var History = require('history');
 var assert = require('component-assert');
 var history = History();
-var onchange = {};
+var test = {};
 
 describe('History#route', function () {
 
-  before(function () {
-    onchange.fn = function () {};
+  function none () {}
 
-    history.on('change', function (history) {
-      onchange.fn(history);
-    });
-    
+  function onchange (history) {
+    test.fn(history);
+  }
+
+  before(function () {
+    test.fn = none;
+    history.on('change', onchange); 
     history.start();
   });
 
-  beforeEach(function () {
-    // history.off('change');
+  beforeEach(function (done) {
+    test.fn = none;
+    done();
+  });
+
+  afterEach(function () {
+    test.fn = none;
   });
 
   it('should emit `change` event', function (done) {
     var route = '#/a';
 
-    onchange.fn = function (history) {
+    test.fn = function (history) {
       assert(history.prev === '#');
       assert(history.current === route);
       done();
@@ -36,7 +43,7 @@ describe('History#route', function () {
     var len = routes.length;
     var i;
 
-    onchange.fn = function (history) {
+    test.fn = function (history) {
       var prev = history.prev;
       var current = history.current;
       var i = routes.indexOf(current);
