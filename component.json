@@ -5,9 +5,7 @@
   "description": "History component",
   "keywords": ["history", "onhashchange", "popstate"],
   "scripts": ["index.js"],
-  "dependencies": {
-    "apily/emitter": "*"
-  },
+  "dependencies": {},
   "development": {
     "component/assert": "*",
     "visionmedia/mocha": "*"
