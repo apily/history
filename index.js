@@ -10,7 +10,7 @@
  * Expose `History` singleton
  */
 
-module.exports = history;
+module.exports = History;
 
 /**
  * Module dependencies
@@ -22,19 +22,7 @@ var Emitter = require('emitter');
  * singleton
  */
 
-var singleton;
-
-/**
- * history
- * Get the singleton
- */
-
-function history () {
-  if (!singleton) {
-    singleton = new History();
-  }
-  return singleton;
-}
+var history;
 
 /**
  * History
@@ -44,20 +32,27 @@ function history () {
  */
 
 function History() {
-  if (!(this instanceof History)) {
-    return new History();
+  if (!history) {
+    history = new History();
   }
-  Emitter.call(this);
-  this.onchange = this.onchange.bind(this);
-  this.started = false;
+  this._onchange = this._onchange.bind(this);
+  this.onchange = function () {};
+  return history;
 }
 
 /**
- * Inherit from `Emitter`
+ * History.use
+ * Use a plugin
+ * 
+ * @params {Function} fn plugin
+ * @return {History} History constructor
+ * @api public
  */
 
-History.prototype = Object.create(Emitter.prototype);
-History.prototype.constructor = History;
+History.use = function (fn) {
+  fn(this);
+  return this;
+};
 
 
 /**
@@ -69,10 +64,10 @@ History.prototype.constructor = History;
  * @api private
  */
 
-History.prototype.onchange = function (event) {
+History.prototype._onchange = function (event) {
   this.prev = this.current;
   this.current = '#' + event.newURL.split('#')[1]; //window.location.hash;
-  this.emit('change', this);
+  this.onchange(this);
 };
 
 /**
@@ -88,7 +83,7 @@ History.prototype.start = function (current) {
   }
   this.current = current || '#';
   this.started = true;
-  window.onhashchange = this.onchange;
+  window.onhashchange = this._onchange;
   return this;
 };
 
@@ -101,6 +96,6 @@ History.prototype.start = function (current) {
 
 History.prototype.stop = function () {
   this.started = false;
-  window.onhashchange = this.onchange;
+  window.onhashchange = this._onchange;
   return this;
 };
