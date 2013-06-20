@@ -13,12 +13,6 @@
 module.exports = History;
 
 /**
- * Module dependencies
- */
-
-var Emitter = require('emitter');
-
-/**
  * singleton
  */
 
