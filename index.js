@@ -10,13 +10,13 @@
  * Expose `History` singleton
  */
 
-module.exports = History;
+module.exports = history;
 
 /**
  * singleton
  */
 
-var history;
+var singleton;
 
 /**
  * History
@@ -25,14 +25,19 @@ var history;
  * @constructor
  */
 
-function History() {
-  if (!history) {
-    history = new History();
+function history () {
+  if (!singleton) {
+    singleton = new History();
   }
+  return singleton;
+}
+
+function History () {
   this._onchange = this._onchange.bind(this);
   this.onchange = function () {};
-  return history;
 }
+
+history.History = History;
 
 /**
  * History.use
