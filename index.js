@@ -80,9 +80,11 @@ History.prototype.start = function (current) {
   if (this.started) {
     return this;
   }
-  this.current = current || '#';
+  this.prev = '#';
+  this.current = current || window.location.hash;
   this.started = true;
   window.onhashchange = this._onchange;
+  this.onchange(this);
   return this;
 };
 
