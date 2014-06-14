@@ -1,0 +1,10 @@
+{
+  "name": "history",
+  "version": "0.2.0",
+  "scripts": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "description": "History component",
+  "keywords": ["history", "onhashchange", "popstate"],
+  "license": "MIT"
+}
