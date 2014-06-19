@@ -1,5 +1,5 @@
 {
-  "name": "history",
+  "name": "apily-history",
   "version": "0.2.0",
   "scripts": "index.js",
   "dependencies": {},
